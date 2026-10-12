@@ -6,7 +6,7 @@ namespace GameVersion {
         "2026-02-02_17_51",
     };
 
-    const string remoteUrl = "https://openplanet.dev/plugin/Shush/config/version-compat";
+    const string remoteUrl = "https://api.openplanet.dev/plugin/shush/config/version-compat";
     bool CheckedVersion = false;
     bool LocalGameVersionSafe = false;
     bool RemoteSaysSafe = false;
