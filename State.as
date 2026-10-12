@@ -3,11 +3,12 @@ class DriveState {
     bool viewingOwnPlayer = false;
     bool forceSpec = false;
     bool inEditor = false;
+    bool online = false;
 
     SGamePlaygroundUIConfig::EUISequence currentUISequence = SGamePlaygroundUIConfig::EUISequence::None;
 
     bool get_IsDriving() {
-        return hasPlayground && viewingOwnPlayer && !forceSpec && !inEditor
+        return hasPlayground && viewingOwnPlayer && !forceSpec && !inEditor && !online
             && currentUISequence == SGamePlaygroundUIConfig::EUISequence::Playing;
     }
 }
@@ -18,6 +19,7 @@ DriveState ReadDriveState() {
     driveState.inEditor = app.Editor !is null;
     auto currentPlayground = app.CurrentPlayground;
     driveState.hasPlayground = currentPlayground !is null;
+    driveState.online = app.PlaygroundScript is null;
 
     if (driveState.hasPlayground && currentPlayground.GameTerminals.Length > 0) {
         auto gameTerminal = currentPlayground.GameTerminals[0];
