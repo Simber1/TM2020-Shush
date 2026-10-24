@@ -15,9 +15,11 @@ bool IsOwnCar(uint audioGroupHandle) {
     return g_lastFocus.Find(audioGroupHandle) >= 0;
 }
 
-// CommonCarWind is an "engine" source too but sits in Ambiance with no group handle.
-bool IsCarEngineSource(CAudioSourceEngine@ eng) {
-    auto grp = eng.BalanceGroup;
-    return (grp == CAudioSource::EAudioBalanceGroup::Player || grp == CAudioSource::EAudioBalanceGroup::OtherPlayers)
-        && eng.AudioGroupHandle != 0xFFFFFFFF;
+// a car's sounds carry its group handle and sit in Player, Bengs (impacts) or GameUI (the slow-mo loop);
+// music, menus, ambiance, wind and real UI sounds have no handle (0xFFFFFFFF). OtherPlayers is unused today.
+bool IsCarAudioSource(CAudioSource@ src) {
+    auto grp = src.BalanceGroup;
+    return (grp == CAudioSource::EAudioBalanceGroup::Player || grp == CAudioSource::EAudioBalanceGroup::OtherPlayers
+        || grp == CAudioSource::EAudioBalanceGroup::Bengs || grp == CAudioSource::EAudioBalanceGroup::GameUI)
+        && src.AudioGroupHandle != 0xFFFFFFFF;
 }
